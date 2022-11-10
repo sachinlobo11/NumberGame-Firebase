@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseService {
 
+// new change
+
     public static void serviceForsend(String Opinion, int number) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
 
@@ -22,6 +24,7 @@ public class FirebaseService {
 
 
     }
+
     public static void serviceForsend(String Opinion) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
 
