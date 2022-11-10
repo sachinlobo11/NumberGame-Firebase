@@ -9,6 +9,19 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseService {
 
+    public static void serviceForsend(String Opinion, int number) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", Opinion);
+        data.put("number",number);
+
+        ApiFuture<WriteResult> result = db.collection("users").document("Number").set(data);
+
+        System.out.println("Update time : " + result.get().getUpdateTime());
+
+
+    }
     public static void serviceForsend(String Opinion) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
 
@@ -40,7 +53,7 @@ public class FirebaseService {
         }
     }
 
-    public static void getDocumentdata() throws ExecutionException, InterruptedException {
+    public static String getDocumentdata(String query) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection("users").document("Number");
         // asynchronously retrieve the document
@@ -50,10 +63,17 @@ public class FirebaseService {
         DocumentSnapshot document = future.get();
         if (document.exists()) {
             System.out.println("Document data: " + document.getData());
+            System.out.println(document.getString("name"));
+
+            if (document.getString(query).equals("null")){
+
+                return "null";
+            }
+            return document.getString(query);
         } else {
             System.out.println("No such document!");
         }
-
+        return "exit";
 
     }
 }
